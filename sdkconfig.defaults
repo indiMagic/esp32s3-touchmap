@@ -1,0 +1,51 @@
+# Target and flash
+CONFIG_IDF_TARGET="esp32s3"
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_ESPTOOLPY_FLASHMODE_QIO=y
+CONFIG_ESPTOOLPY_FLASHFREQ_80M=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+CONFIG_PARTITION_TABLE_FILENAME="partitions.csv"
+
+# CPU / RTOS
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
+CONFIG_FREERTOS_HZ=1000
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192
+
+# 8 MB octal PSRAM (frame buffers, tile cache, route)
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_OCT=y
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_USE_MALLOC=y
+CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL=4096
+
+# RGB LCD with the frame buffer in PSRAM. The frame buffer is unreadable while flash ops disable the
+# cache, so the LCD ISR must NOT be IRAM-safe (it would crash on every NVS/flash access).
+# All app tasks are pinned to core 0, the core that runs the LCD refill ISR, so no other core
+# competes with it for PSRAM bandwidth.
+CONFIG_LCD_RGB_ISR_IRAM_SAFE=n
+# Re-sync the DMA every VBlank so a PSRAM stall can never leave the picture shifted.
+CONFIG_LCD_RGB_RESTART_IN_VSYNC=y
+# Bigger data cache with 64-byte lines = more PSRAM throughput for the frame buffer.
+CONFIG_ESP32S3_DATA_CACHE_64KB=y
+CONFIG_ESP32S3_DATA_CACHE_LINE_64B=y
+
+# Bluetooth LE through NimBLE (peripheral only, one connection)
+CONFIG_BT_ENABLED=y
+CONFIG_BT_NIMBLE_ENABLED=y
+CONFIG_BT_NIMBLE_MAX_CONNECTIONS=1
+CONFIG_BT_NIMBLE_ROLE_CENTRAL=n
+CONFIG_BT_NIMBLE_ROLE_OBSERVER=n
+CONFIG_BT_NIMBLE_ATT_PREFERRED_MTU=185
+CONFIG_BT_NIMBLE_PINNED_TO_CORE_0=y
+
+# FAT on the SD card
+CONFIG_FATFS_LFN_HEAP=y
+CONFIG_FATFS_MAX_LFN=64
+CONFIG_FATFS_PER_FILE_CACHE=y
+
+# Watchdog: do not reset the board if the SD card disappears mid-read
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=10
+
+# Logging
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y

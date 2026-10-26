@@ -1,0 +1,26 @@
+{
+  "idf.flashType": "UART",
+  "idf.openOcdConfigs": ["board/esp32s3-builtin.cfg"],
+  "idf.adapterTargetName": "esp32s3",
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32s3"
+  },
+  "idf.buildPath": "${workspaceFolder}/build",
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
+  "C_Cpp.intelliSenseEngine": "default",
+  "files.associations": {
+    "*.h": "c",
+    "*.c": "c"
+  },
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.formatOnSave": false,
+  "editor.rulers": [100],
+  "python.analysis.extraPaths": ["${workspaceFolder}/tools"],
+  "cmake.configureOnOpen": false,
+  "search.exclude": {
+    "build": true,
+    "managed_components": true
+  },
+  "terminal.integrated.stickyScroll.enabled": false
+}

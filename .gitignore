@@ -1,0 +1,12 @@
+build/
+sdkconfig
+sdkconfig.old
+managed_components/
+dependencies.lock
+test/host/build/
+sim/build/
+sim/out/
+sdcard/
+__pycache__/
+*.pyc
+.cache/

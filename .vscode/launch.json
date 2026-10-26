@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "ESP32-S3 GDB (built-in USB-JTAG)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/esp32s3_touchmap.elf",
+      "cwd": "${workspaceFolder}",
+      "MIMode": "gdb",
+      "miDebuggerPath": "xtensa-esp32s3-elf-gdb",
+      "miDebuggerServerAddress": "localhost:3333",
+      "setupCommands": [
+        { "text": "set remotetimeout 20" },
+        { "text": "mon reset halt" },
+        { "text": "flushregs" },
+        { "text": "thb app_main" }
+      ]
+    },
+    {
+      "name": "Host unit tests (gdb)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/test/host/build/test_all",
+      "cwd": "${workspaceFolder}/test/host",
+      "MIMode": "gdb",
+      "preLaunchTask": "Host: unit tests"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "IDF: build",
+      "type": "shell",
+      "command": ". C:/Espressif/tools/Microsoft.v6.0.PowerShell_profile.ps1 | Out-Null; $env:IDF_PATH='C:/esp/v6.0/esp-idf'; idf.py build",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "IDF: flash",
+      "type": "shell",
+      "command": ". C:/Espressif/tools/Microsoft.v6.0.PowerShell_profile.ps1 | Out-Null; $env:IDF_PATH='C:/esp/v6.0/esp-idf'; idf.py -p ${input:port} flash",
+      "problemMatcher": []
+    },
+    {
+      "label": "IDF: monitor",
+      "type": "shell",
+      "command": ". C:/Espressif/tools/Microsoft.v6.0.PowerShell_profile.ps1 | Out-Null; $env:IDF_PATH='C:/esp/v6.0/esp-idf'; idf.py -p ${input:port} monitor",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "IDF: flash + monitor",
+      "type": "shell",
+      "command": ". C:/Espressif/tools/Microsoft.v6.0.PowerShell_profile.ps1 | Out-Null; $env:IDF_PATH='C:/esp/v6.0/esp-idf'; idf.py -p ${input:port} flash monitor",
+      "problemMatcher": []
+    },
+    {
+      "label": "IDF: menuconfig",
+      "type": "shell",
+      "command": ". C:/Espressif/tools/Microsoft.v6.0.PowerShell_profile.ps1 | Out-Null; $env:IDF_PATH='C:/esp/v6.0/esp-idf'; idf.py menuconfig",
+      "problemMatcher": []
+    },
+    {
+      "label": "IDF: size components",
+      "type": "shell",
+      "command": ". C:/Espressif/tools/Microsoft.v6.0.PowerShell_profile.ps1 | Out-Null; $env:IDF_PATH='C:/esp/v6.0/esp-idf'; idf.py size-components",
+      "problemMatcher": []
+    },
+    {
+      "label": "Host: unit tests",
+      "type": "shell",
+      "command": "make -C test/host run",
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Sim: render UI to PNG",
+      "type": "shell",
+      "command": "make -C sim run && python3 sim/to_png.py",
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Check layering",
+      "type": "shell",
+      "command": "python3 tools/check_layers.py",
+      "problemMatcher": []
+    },
+    {
+      "label": "Make demo tile pack",
+      "type": "shell",
+      "command": "python3 tools/tilepack.py demo --out sdcard/maps",
+      "problemMatcher": []
+    },
+    {
+      "label": "Regenerate font",
+      "type": "shell",
+      "command": "python3 tools/gen_font.py",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "port",
+      "type": "promptString",
+      "description": "Serial port (e.g. /dev/ttyACM0 or COM5)",
+      "default": "/dev/ttyACM0"
+    }
+  ]
+}
